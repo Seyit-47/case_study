@@ -1,0 +1,82 @@
+:root {
+  --primary: #2563eb;
+  --bg-app: #ffffff;
+  --bg-sidebar: #f8f9fa;
+  --border: #e5e7eb;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --bubble-user: #2563eb;
+  --bubble-ai: #f3f4f6;
+  --radius: 8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+body { background: var(--bg-app); color: var(--text-main); height: 100vh; overflow: hidden; }
+
+/* LAYOUT */
+.app-layout { display: flex; height: 100vh; width: 100vw; }
+
+/* SIDEBAR */
+.sidebar { width: 260px; background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+.sidebar-header { padding: 20px; border-bottom: 1px solid var(--border); }
+
+.new-chat-btn {
+  width: 100%; background: var(--primary); color: white; border: none; padding: 10px;
+  border-radius: var(--radius); font-weight: 500; cursor: pointer; text-align: center; font-size: 0.95rem;
+}
+.new-chat-btn:hover { background: #1d4ed8; }
+
+.session-list { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 2px; }
+.session-label { font-size: 0.75rem; font-weight: bold; color: var(--text-muted); text-transform: uppercase; margin: 15px 0 5px 5px; }
+
+.session-item {
+  padding: 10px 15px; border-radius: var(--radius); cursor: pointer; color: var(--text-main); font-size: 0.9rem;
+}
+.session-item:hover { background: #e5e7eb; }
+.session-item.active { background: #eff6ff; color: var(--primary); font-weight: 600; }
+
+/* MAIN CHAT */
+.main-chat { flex: 1; display: flex; flex-direction: column; position: relative; }
+.chat-header { height: 60px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; padding: 0 25px; }
+.chat-header h3 { font-size: 1rem; font-weight: 600; }
+.chat-header small { color: var(--text-muted); font-size: 0.8rem; }
+
+/* MESSAGES */
+.chat-content { flex: 1; overflow-y: auto; padding: 30px; display: flex; flex-direction: column; gap: 20px; }
+.message-row { display: flex; gap: 15px; max-width: 800px; margin: 0 auto; width: 100%; }
+
+.avatar-text {
+  width: 35px; height: 35px; border-radius: 4px; display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: bold; flex-shrink: 0;
+}
+.bot .avatar-text { background: #e0f2fe; color: #0284c7; }
+.user .avatar-text { background: #2563eb; color: white; order: 1; } /* User avatar on right */
+
+.bubble { padding: 12px 16px; border-radius: 8px; font-size: 1rem; line-height: 1.6; max-width: 85%; }
+.assistant .bubble { background: var(--bubble-ai); color: var(--text-main); }
+.user .bubble { background: var(--bubble-user); color: white; margin-left: auto; } /* Push user bubble to right */
+
+/* INPUT AREA */
+.input-area { padding: 25px; border-top: 1px solid var(--border); }
+.input-wrapper { max-width: 800px; margin: 0 auto; display: flex; gap: 10px; }
+
+input { flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 1rem; outline: none; transition: border 0.2s; }
+input:focus { border-color: var(--primary); }
+
+.send-btn { padding: 0 25px; background: var(--primary); color: white; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 500; }
+.send-btn:disabled { opacity: 0.5; }
+
+/* DASHBOARD */
+.dashboard-container { padding: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+.welcome-title { font-size: 2rem; margin-bottom: 30px; color: var(--text-main); }
+
+.models-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; width: 100%; max-width: 900px; }
+.model-card {
+  padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: all 0.2s; background: white;
+}
+.model-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+.model-name { font-weight: 600; font-size: 1.05rem; margin-bottom: 5px; }
+.model-desc { font-size: 0.85rem; color: var(--text-muted); }
+
+.error-box { color: #991b1b; background: #fee2e2; padding: 20px; border-radius: var(--radius); text-align: center; width: 100%; border: 1px solid #fca5a5; }
