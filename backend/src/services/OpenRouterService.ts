@@ -22,11 +22,11 @@ export class OpenRouterService {
     });
   }
 
-  async generateResponse(message: string, model: string): Promise<string> {
+  async generateResponse(messages: any[], model: string): Promise<string> {
     try {
       const completion = await this.openai.chat.completions.create({
         model: model,
-        messages: [{ role: "user", content: message }],
+        messages: messages,
       });
       return completion.choices[0].message.content || "No response from AI...";
     } catch (error) {

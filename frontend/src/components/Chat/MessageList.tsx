@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { User, Bot } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import type { Message } from '../../types';
 
 interface MessageListProps {
@@ -15,26 +16,43 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, loading }) =
   }, [messages, loading]);
 
   return (
-    <div className="chat-container">
+    <>
       {messages.map((msg, index) => (
         <div key={index} className={`message-row ${msg.role}`}>
-          {msg.role === 'assistant' && <div className="avatar bot"><Bot size={20}/></div>}
+          <div className="avatar-text">
+            {msg.role === 'assistant' ? 'AI' : 'Me'}
+          </div>
           
           <div className="bubble">
-            {msg.content}
+            <ReactMarkdown 
+              remarkPlugins={[remarkGfm]}
+              components={{
+                code({node, inline, className, children, ...props}: any) {
+                  return !inline ? (
+                    <div style={{background: '#1e1e1e', color: '#fff', padding: '10px', borderRadius: '5px', overflowX: 'auto'}}>
+                      <code {...props}>{children}</code>
+                    </div>
+                  ) : (
+                    <code style={{background: 'rgba(0,0,0,0.1)', padding: '2px 4px', borderRadius: '3px'}} {...props}>
+                      {children}
+                    </code>
+                  )
+                }
+              }}
+            >
+              {msg.content}
+            </ReactMarkdown>
           </div>
-
-          {msg.role === 'user' && <div className="avatar user"><User size={20}/></div>}
         </div>
       ))}
       
       {loading && (
         <div className="message-row assistant">
-          <div className="avatar bot"><Bot size={20}/></div>
-          <div className="bubble loading-indicator">Thinking...</div>
+          <div className="avatar-text">AI</div>
+          <div className="bubble" style={{fontStyle:'italic', color:'#6b7280'}}>Thinking...</div>
         </div>
       )}
       <div ref={bottomRef} />
-    </div>
+    </>
   );
 };
